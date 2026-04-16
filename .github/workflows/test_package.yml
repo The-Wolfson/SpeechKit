@@ -55,48 +55,32 @@ jobs:
       - name: Test
         uses: skiptools/swift-android-action@main
 
-  iOS:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Test
-        uses: brightdigit/swift-build@main
-        with:
-          type: ios
-          deviceName: iPhone 17
-          osVersion: latest
-          scheme: SpeechKit
+  Apple_Matrix:
+    strategy:
+      matrix:
+        include:
+         - platform: iOS
+           device: iPhone 17
 
-  watchOS:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Test
-        uses: brightdigit/swift-build@main
-        with:
-          type: watchos
+         - platform: watchOS
+           device: Apple Watch SE 3
 
-  visionOS:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Test
-        uses: brightdigit/swift-build@main
-        with:
-          type: visionos
+         - platform: visionOS
+           device: Apple Vision Pro
 
-  tvOS:
+         - platform: tvOS
+           device: Apple TV 4K
+          
     runs-on: macos-latest
     steps:
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@main
+        with:
+          swift-version: 6.3
       - name: Checkout
         uses: actions/checkout@v6
       - name: Test
-        uses: brightdigit/swift-build@main
-        with:
-          type: tvos
+        run: xcodebuild test -destination "platform=${{ matrix.platform }} Simulator,name=${{ matrix.device }}" -scheme "$(xcodebuild -list -json | jq -r '.workspace.schemes[-1]')"
 
   WASI:
     runs-on: ubuntu-latest
