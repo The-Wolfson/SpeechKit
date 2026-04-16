@@ -47,7 +47,7 @@ jobs:
       - name: Test
         uses: skiptools/swift-android-action@main
 
-  Apple_Matrix: 
+  Apple: 
     strategy: 
       matrix: 
         include: 
