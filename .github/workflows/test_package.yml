@@ -67,6 +67,7 @@ jobs:
           deviceName: iPhone 17
           osVersion: latest
           scheme: SpeechKit
+          swift-version: 6.3
 
   watchOS:
     runs-on: macos-latest
