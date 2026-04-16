@@ -47,28 +47,13 @@ jobs:
       - name: Test
         uses: skiptools/swift-android-action@main
 
-  Apple_Matrix:
-    strategy:
-      matrix:
-        include:
-         - platform: iOS
-           device: iPhone 17
-
-         - platform: watchOS
-           device: Apple Watch SE 3
-
-         - platform: visionOS
-           device: Apple Vision Pro
-
-         - platform: tvOS
-           device: Apple TV 4K
-          
+  Apple:
     runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Test
-        run: xcodebuild test -destination "platform=${{ matrix.platform }} Simulator,name=${{ matrix.device }}" -scheme "$(xcodebuild -list -json | jq -r '.workspace.schemes[-1]')"
+        run: xcrun simctl list devices --json | jq -r '.devices[][] | select(.isAvailable==true) | .udid' | xargs -I {} xcodebuild test -scheme "$(xcodebuild -list -json | jq -r '.workspace.schemes[-1]')" -destination "id={}"
 
   WASI:
     runs-on: ubuntu-latest
