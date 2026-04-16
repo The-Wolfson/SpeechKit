@@ -7,8 +7,12 @@ jobs:
   macOS:
     runs-on: macos-latest
     steps:
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@main
+        with:
+          swift-version: 6.3
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@main      
       - name: Build
         run: swift build
       - name: Test
@@ -17,6 +21,10 @@ jobs:
   Linux:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Swift
+        uses: swift-actions/setup-swift@main
+        with:
+          swift-version: 6.3
       - name: Checkout
         uses: actions/checkout@main
       - name: Build
