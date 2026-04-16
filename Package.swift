@@ -3,24 +3,45 @@
 
 import PackageDescription
 
+var packageDependencies: [Package.Dependency] = []
+var targetDependencies = [PackageDescription.Target.Dependency]()
+var testDependencies = [PackageDescription.Target.Dependency]()
+
+//#if canImport(AVFoundation)
+//
+//#elseif os(Linux)
+packageDependencies = [.package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master"),]
+targetDependencies = [
+    .product(name: "libespeak-ng", package: "espeak-ng-spm"),
+    .product(name: "espeak-ng-data", package: "espeak-ng-spm")
+]
+#if /*elseif*/ os(Android)
+packageDependencies = [.package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")]
+targetDependencies = [.product(name: "SwiftJava", package: "swift-java")]
+#elseif os(WASI)
+packageDependencies = [.package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.50.0")]
+targetDependencies = [.product(name: "JavaScriptKit", package: "JavaScriptKit")]
+testDependencies = [.product(name: "JavaScriptEventLoopTestSupport", package: "JavaScriptKit")]
+#endif
+
 let package = Package(
     name: "SpeechKit",
+    platforms: [.macOS(.v14)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "SpeechKit",
             targets: ["SpeechKit"]
         ),
     ],
+    dependencies: packageDependencies,
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SpeechKit"
+            name: "SpeechKit",
+            dependencies: targetDependencies
         ),
         .testTarget(
             name: "SpeechKitTests",
-            dependencies: ["SpeechKit"]
+            dependencies: ["SpeechKit"] + testDependencies
         ),
     ],
     swiftLanguageModes: [.v6]
