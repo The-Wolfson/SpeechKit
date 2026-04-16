@@ -26,7 +26,7 @@ var testDependencies = [PackageDescription.Target.Dependency]()
 
 let package = Package(
     name: "SpeechKit",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS(.v14), .iOS(.v16)],
     products: [
         .library(
             name: "SpeechKit",
