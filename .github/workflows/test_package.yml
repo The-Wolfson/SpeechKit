@@ -61,7 +61,7 @@ jobs:
             device: Apple Vision Pro 
             os: 26.2
           - platform: tvOS 
-            device: Apple TV 4K 
+            device: Apple TV 
             os: 26.2
             
     runs-on: macos-latest 
