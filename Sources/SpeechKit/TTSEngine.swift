@@ -9,8 +9,8 @@ protocol _TTSEngine {
 }
 
 public final class TTSEngine: _TTSEngine {
-    private let _engine: (any _TTSEngine)
-    
+    private let _engine: any _TTSEngine
+
     init() {
         #if canImport(AVFoundation)
             _engine = DarwinTTSEngine()

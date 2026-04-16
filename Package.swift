@@ -9,19 +9,19 @@ var testDependencies = [PackageDescription.Target.Dependency]()
 
 #if canImport(AVFoundation)
 
-#elseif os(Linux)
-packageDependencies = [.package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master"),]
-targetDependencies = [
-    .product(name: "libespeak-ng", package: "espeak-ng-spm"),
-    .product(name: "espeak-ng-data", package: "espeak-ng-spm")
-]
 #elseif os(Android)
-packageDependencies = [.package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")]
-targetDependencies = [.product(name: "SwiftJava", package: "swift-java")]
+    packageDependencies = [.package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")]
+    targetDependencies = [.product(name: "SwiftJava", package: "swift-java")]
+#elseif os(Linux)
+    packageDependencies = [.package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master")]
+    targetDependencies = [
+        .product(name: "libespeak-ng", package: "espeak-ng-spm"),
+        .product(name: "espeak-ng-data", package: "espeak-ng-spm"),
+    ]
 #elseif os(WASI)
-packageDependencies = [.package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.50.0")]
-targetDependencies = [.product(name: "JavaScriptKit", package: "JavaScriptKit")]
-testDependencies = [.product(name: "JavaScriptEventLoopTestSupport", package: "JavaScriptKit")]
+    packageDependencies = [.package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.50.0")]
+    targetDependencies = [.product(name: "JavaScriptKit", package: "JavaScriptKit")]
+    testDependencies = [.product(name: "JavaScriptEventLoopTestSupport", package: "JavaScriptKit")]
 #endif
 
 let package = Package(

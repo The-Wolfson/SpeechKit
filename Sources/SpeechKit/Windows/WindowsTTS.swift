@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  WindowsTTS.swift
 //  SpeechKit
 //
 //  Created by Joshua Wolfson on 12/4/2026.
@@ -7,16 +7,12 @@
 
 #if canImport(WinSDK)
 
-import Foundation
+    import Foundation
 
-final class WindowsTTS: _TTSEngine {
-    func speak(_ text: String) {
+    final class WindowsTTSEngine: _TTSEngine {
+        func speak(_: String) {}
 
+        func stop() {}
     }
-    
-    func stop() {
-        
-    }
-}
 
 #endif

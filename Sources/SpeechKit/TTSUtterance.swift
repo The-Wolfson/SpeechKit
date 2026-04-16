@@ -6,8 +6,8 @@ protocol _TTSUtterance {
 
 public final class TTSUtterance: _TTSUtterance, Sendable {
     let speechString: String
-    
+
     init(string: String) {
-        self.speechString = string
+        speechString = string
     }
 }
