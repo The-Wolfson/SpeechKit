@@ -37,6 +37,9 @@ jobs:
     steps:
       - name: Setup Swift
         uses: compnerd/gha-setup-swift@main
+        with:
+          swift-version: swift-6.3-release 
+          swift-build: 6.3-RELEASE
       - name: Checkout
         uses: actions/checkout@main
       - name: Build
@@ -61,6 +64,9 @@ jobs:
         uses: brightdigit/swift-build@main
         with:
           type: ios
+          deviceName: iPhone 17
+          osVersion: latest
+          scheme: SpeechKit
 
   watchOS:
     runs-on: macos-latest
