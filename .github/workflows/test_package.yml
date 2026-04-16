@@ -64,6 +64,8 @@ jobs:
         uses: brightdigit/swift-build@main
         with:
           type: ios
+          deviceName: iPhone 17
+          osVersion: latest
 
   watchOS:
     runs-on: macos-latest
