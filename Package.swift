@@ -7,15 +7,15 @@ var packageDependencies: [Package.Dependency] = []
 var targetDependencies = [PackageDescription.Target.Dependency]()
 var testDependencies = [PackageDescription.Target.Dependency]()
 
-//#if canImport(AVFoundation)
-//
-//#elseif os(Linux)
+#if canImport(AVFoundation)
+
+#elseif os(Linux)
 packageDependencies = [.package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master"),]
 targetDependencies = [
     .product(name: "libespeak-ng", package: "espeak-ng-spm"),
     .product(name: "espeak-ng-data", package: "espeak-ng-spm")
 ]
-#if /*elseif*/ os(Android)
+#elseif os(Android)
 packageDependencies = [.package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")]
 targetDependencies = [.product(name: "SwiftJava", package: "swift-java")]
 #elseif os(WASI)
