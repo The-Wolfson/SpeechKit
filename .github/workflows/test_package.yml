@@ -55,13 +55,13 @@ jobs:
             device: iPhone 17
             os: 26.2
           - platform: watchOS 
-            device: Apple Watch SE 3 
+            device: Apple Watch Series 11 (46mm) 
             os: 26.2
           - platform: visionOS 
             device: Apple Vision Pro 
             os: 26.2
           - platform: tvOS 
-            device: Apple TV 4K 
+            device: Apple TV 
             os: 26.2
             
     runs-on: macos-latest 
