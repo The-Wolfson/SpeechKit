@@ -7,23 +7,6 @@ var packageDependencies: [Package.Dependency] = []
 var targetDependencies = [PackageDescription.Target.Dependency]()
 var testDependencies = [PackageDescription.Target.Dependency]()
 
-#if canImport(AVFoundation)
-
-#elseif os(Android)
-    packageDependencies = [.package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")]
-    targetDependencies = [.product(name: "SwiftJava", package: "swift-java")]
-#elseif os(WASI)
-    packageDependencies = [.package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.50.0")]
-    targetDependencies = [.product(name: "JavaScriptKit", package: "JavaScriptKit")]
-    testDependencies = [.product(name: "JavaScriptEventLoopTestSupport", package: "JavaScriptKit")]
-#elseif os(Linux)
-    packageDependencies = [.package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master")]
-    targetDependencies = [
-        .product(name: "libespeak-ng", package: "espeak-ng-spm"),
-        .product(name: "espeak-ng-data", package: "espeak-ng-spm"),
-    ]
-#endif
-
 let package = Package(
     name: "SpeechKit",
     platforms: [.iOS(.v16), .macCatalyst(.v14), .macOS(.v14), .tvOS(.v16), .visionOS(.v1), .watchOS(.v9)],
@@ -33,15 +16,24 @@ let package = Package(
             targets: ["SpeechKit"]
         ),
     ],
-    dependencies: packageDependencies,
+    dependencies: [
+        .package(url: "https://github.com/espeak-ng/espeak-ng-spm.git", branch: "master"),
+        .package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.50.0"),
+        .package(url: "https://github.com/swiftlang/swift-java.git", from: "0.2.0")
+    ],
     targets: [
         .target(
             name: "SpeechKit",
-            dependencies: targetDependencies
+            dependencies: [
+                .product(name: "SwiftJava", package: "swift-java", condition: .when(platforms: [.android])),
+                .product(name: "JavaScriptKit", package: "JavaScriptKit", condition: .when(platforms: [.wasi])),
+                .product(name: "libespeak-ng", package: "espeak-ng-spm", condition: .when(platforms: [.linux])),
+                .product(name: "espeak-ng-data", package: "espeak-ng-spm", condition: .when(platforms: [.linux])),
+            ]
         ),
         .testTarget(
             name: "SpeechKitTests",
-            dependencies: ["SpeechKit"] + testDependencies
+            dependencies: ["SpeechKit", .product(name: "JavaScriptEventLoopTestSupport", package: "JavaScriptKit", condition: .when(platforms: [.wasi]))]
         ),
     ],
     swiftLanguageModes: [.v6]
