@@ -74,12 +74,7 @@ jobs:
   WASM:
     runs-on: macos-latest
     steps:
-      - run: |
-          curl -O https://download.swift.org/swiftly/darwin/swiftly.pkg && \
-          installer -pkg swiftly.pkg -target CurrentUserHomeDirectory && \
-          ~/.swiftly/bin/swiftly init --quiet-shell-followup && \
-          . "${SWIFTLY_HOME_DIR:-$HOME/.swiftly}/env.sh" && \
-          hash -r
+      - uses: vapor/swiftly-action@v0.2
       - run: swiftly install 6.3
       - run: swiftly use 6.3
       - run: swift sdk install https://download.swift.org/swift-6.3-release/wasm-sdk/swift-6.3-RELEASE/swift-6.3-RELEASE_wasm.artifactbundle.tar.gz --checksum 9fa4016ee632c7e9e906608ec3b55cf13dfc4dff44e47574c5af58064dc33fd9
