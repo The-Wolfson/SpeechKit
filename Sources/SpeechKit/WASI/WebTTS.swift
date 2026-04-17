@@ -10,9 +10,9 @@
     import Foundation
     import JavaScriptKit
 
-    final class WebTTSEngine: _TTSEngine<WebUtterance> {
+    final class WebTTSEngine: _TTSEngine {
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
-        private var speechSynthesis: JSObject {
+        private var synthesiser: JSObject {
             let window = JSObject.global
             return window.speechSynthesis.object!
         }
@@ -28,8 +28,8 @@
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/speak
-        func speak(_: TTSUtterance) {
-            let utterance = JSObject().new(string)
+        func speak(_ utterance: TTSUtterance) {
+            let utterance = JSObject().new(utterance.speechString)
             _ = speechSynthesis.speak!(utterance)
         }
 
