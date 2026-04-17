@@ -78,4 +78,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Build
-        run: swift build --swift-sdk swift-6.3-RELEASE_wasm
+        run: swift build --swift-sdk swift-6.3-RELEASE_wasm --build-system native
