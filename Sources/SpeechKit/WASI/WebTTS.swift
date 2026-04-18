@@ -19,33 +19,33 @@
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/speaking
         var isSpeaking: Bool {
-            speechSynthesis.speaking.boolean!
+            synthesiser.speaking.boolean!
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/paused
         var isPaused: Bool {
-            speechSynthesis.paused.boolean!
+            synthesiser.paused.boolean!
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/speak
         func speak(_ utterance: TTSUtterance) {
             let utterance = JSObject().new(utterance.speechString)
-            _ = speechSynthesis.speak!(utterance)
+            _ = synthesiser.speak!(utterance)
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/resume
         func continueSpeaking() {
-            _ = speechSynthesis.resume!
+            _ = synthesiser.resume!
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/pause
         func pauseSpeaking() {
-            _ = speechSynthesis.pause!
+            _ = synthesiser.pause!
         }
 
         /// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/cancel
         func stopSpeaking() {
-            _ = speechSynthesis.cancel!
+            _ = synthesiser.cancel!
         }
     }
 
